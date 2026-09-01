@@ -1,0 +1,43 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <id>dev.gaphunter.environmentspecificconstantcompanion</id>
+    <name>Environment-Specific Constant Companion</name>
+    <vendor>Gap Hunter Labs</vendor>
+    <description><![CDATA[
+        <p>Warning on a hardcoded URL or <code>host:port</code> string
+        literal in Java source that also appears, textually, as a
+        value in one of the project's own config files
+        (<code>.properties</code>/<code>.yml</code>/<code>.yaml</code>/
+        <code>.env</code>) -- the value clearly belongs to config, and
+        the code copy can now silently drift out of sync with it.</p>
+        <p>Real, documented impact: configuration/IaC drift -- a value
+        that one day gets updated only in the config file (the
+        "correct" place) leaves real code still pointing at the old
+        endpoint/port, with no compile error to catch it. Adjacent to
+        this catalog's own <code>config-secrets-file-companion</code>/
+        <code>env-diff-companion</code>, but neither checks specifically
+        for code-vs-config value divergence.</p>
+        <p>Stated honestly: v0.1 matches only full URLs
+        (<code>http(s)://...</code>) and explicit
+        <code>host:port</code> pairs -- never a bare port number
+        without host context, to keep the false-positive rate low.
+        Exact string match only against config values found in
+        <code>.properties</code>/<code>.yml</code>/<code>.yaml</code>
+        files and the single exact filename <code>.env</code> (no
+        <code>.env.*</code> variants yet).</p>
+        <p>Free. No license nags, no telemetry, no network calls.</p>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.java</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <localInspection language="JAVA"
+            groupName="Environment-Specific Constant Companion"
+            displayName="Hardcoded literal duplicates a config value"
+            enabledByDefault="true"
+            level="WARNING"
+            implementationClass="dev.gaphunter.environmentspecificconstantcompanion.inspection.EnvironmentSpecificConstantInspection"/>
+        <notificationGroup id="Environment-Specific Constant Companion" displayType="BALLOON"/>
+    </extensions>
+</idea-plugin>

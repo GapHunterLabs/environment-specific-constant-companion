@@ -6,6 +6,12 @@ value in one of the project's own config files
 (`.properties`/`.yml`/`.yaml`/`.env`) -- the value clearly belongs to
 config, and the code copy can now silently drift out of sync with it.
 
+## Screenshots
+
+![Screenshot 1](docs/screenshots/Screenshot_1.png)
+
+![Screenshot 2](docs/screenshots/Screenshot_2.png)
+
 ## Why it exists
 
 Config drift is a real, recurring source of production incidents: a
